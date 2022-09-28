@@ -49,7 +49,7 @@ yarn test:unit
 
 ```sh
 yarn build
-yarn test:e2e # or `yarn run test:e2e:ci` for headless testing
+yarn test:e2e # or `yarn test:e2e:ci` for headless testing
 ```
 
 ### Lint with [ESLint](https://eslint.org/)
