@@ -17,6 +17,16 @@ const router = createRouter({
       component: PlayView,
     },
     {
+      path: "/leaderboard",
+      name: "leaderboard",
+      component: PlayView,
+    },
+    {
+      path: "/statistics",
+      name: "statistics",
+      component: PlayView,
+    },
+    {
       path: "/about",
       name: "about",
       // route level code-splitting
