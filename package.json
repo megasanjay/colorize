@@ -51,6 +51,7 @@
     "@semantic-release/release-notes-generator": "10.0.3",
     "@types/jsdom": "20.0.0",
     "@types/node": "18.7.23",
+    "@types/uuid": "^8.3.4",
     "@vitejs/plugin-vue": "3.1.0",
     "@vitejs/plugin-vue-jsx": "2.0.1",
     "@vue/eslint-config-prettier": "7.0.0",
