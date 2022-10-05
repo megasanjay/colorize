@@ -3,6 +3,9 @@
     <div
       class="relative mx-auto flex h-14 w-full max-w-screen-lg items-center justify-between"
     >
+      <div class="fixed bottom-2 right-2 text-sm text-slate-500">
+        v{{ version }}
+      </div>
       <RouterLink to="/">
         <div
           class="flex cursor-pointer items-center justify-center pl-4 text-base font-bold transition-all hover:text-sky-500"
@@ -104,6 +107,7 @@ import { Icon } from "@iconify/vue";
 import { ref } from "vue";
 import { RouterLink } from "vue-router";
 
+import { version } from "../../../package.json";
 const links = [
   {
     href: "/leaderboard",
