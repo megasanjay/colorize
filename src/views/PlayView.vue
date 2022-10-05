@@ -105,7 +105,16 @@ import {
   NTimelineItem,
 } from "naive-ui";
 import { v4 as uuidv4 } from "uuid";
-import { type Ref, computed, onBeforeUnmount, onMounted, ref } from "vue";
+import {
+  type Ref,
+  computed,
+  inject,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+} from "vue";
+
+const umami = inject("$umami");
 
 const rows = ref(10);
 const cols = ref(5);
@@ -285,6 +294,10 @@ const showFinalScore = () => {
 
   if (finalScoreElement) {
     finalScoreElement.innerHTML = `Your final score is ${finalScore}`;
+  }
+
+  if (typeof umami == "function") {
+    umami(`game-over-${finalScore}`);
   }
 };
 

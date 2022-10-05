@@ -16,4 +16,6 @@ app.use(MotionPlugin);
 app.use(router);
 app.use(Vue3Lottie);
 
+app.provide("$umami", window.umami);
+
 app.mount("#app");
