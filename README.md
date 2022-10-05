@@ -1,6 +1,6 @@
 # Colorize
 
-This template should help get you started developing with Vue 3 in Vite.
+A simple game where you have to find the odd one out. The game is written in Vue and TypeScript. Feature requests and bug reports are welcome.
 
 ## Recommended IDE Setup
 
@@ -56,4 +56,10 @@ yarn test:e2e # or `yarn test:e2e:ci` for headless testing
 
 ```sh
 yarn lint
+```
+
+### Format with [Prettier](https://prettier.io/)
+
+```sh
+yarn format
 ```
