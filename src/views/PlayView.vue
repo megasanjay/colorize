@@ -1,97 +1,96 @@
 <template>
   <main
-    class="relateive mx-auto flex h-full w-full max-w-screen-lg flex-col items-center px-3 pb-32 pt-20"
+    class="relative mx-auto flex h-screen w-full max-w-screen-lg flex-col px-3 pb-32 pt-20"
+    :class="{ 'justify-center': !gameOver, 'items-center': !gameOver }"
   >
-    <div id="play-container" class="h-full w-full bg-red-50">
-      <div class="my-3 flex h-[10px] w-full items-center justify-center">
-        <div class="timer-bar" :style="timerBarStyle" v-show="!gameOver"></div>
-      </div>
+    <div class="my-3 flex h-[10px] w-full items-center justify-center">
+      <div class="timer-bar" :style="timerBarStyle" v-show="!gameOver"></div>
+    </div>
 
-      <div class="flex w-full flex-col items-center" v-show="!gameOver">
+    <div class="flex w-full flex-col items-center" v-show="!gameOver">
+      <div
+        v-for="(row, rowIndex) in colorGrid"
+        :key="rowIndex"
+        class="my-2 flex justify-center"
+      >
         <div
-          v-for="(row, rowIndex) in colorGrid"
-          :key="rowIndex"
-          class="my-2 flex justify-center"
+          v-for="(item, colIndex) in row"
+          :key="colIndex"
+          class="mx-3 flex h-[20px] cursor-pointer items-center justify-center rounded-full transition-all"
+          :style="{
+            'background-color': item,
+            width: circleDimensions,
+            height: circleDimensions,
+          }"
+          @click="selectOption(rowIndex, colIndex)"
         >
-          <div
-            v-for="(item, colIndex) in row"
-            :key="colIndex"
-            class="mx-3 flex h-[20px] cursor-pointer items-center justify-center rounded-full transition-all"
-            :style="{
-              'background-color': item,
-              width: circleDimensions,
-              height: circleDimensions,
-            }"
-            @click="selectOption(rowIndex, colIndex)"
+          <span
+            class="text-xs text-white"
+            v-if="
+              colIndex === randomCol && rowIndex === randomRow && development
+            "
           >
-            <span
-              class="text-xs text-white"
-              v-if="
-                colIndex === randomCol && rowIndex === randomRow && development
-              "
-            >
-              ...
-            </span>
-          </div>
+            ...
+          </span>
         </div>
       </div>
+    </div>
 
-      <div
-        class="my-3 flex w-full items-center justify-center"
-        v-show="!gameOver"
-      >
-        <span>{{ currentTurn }} / 30</span>
-      </div>
+    <div
+      class="my-3 flex w-full items-center justify-center"
+      v-show="!gameOver"
+    >
+      <span>{{ currentTurn }} / 30</span>
+    </div>
 
-      <div class="my-3 flex flex-col" v-show="gameOver">
-        <p class="text-lg">Mode: {{ gameInfo.gameMode }}</p>
-        <p class="text-md">
-          Score: <span>{{ gameInfo.totalScore }}</span>
-        </p>
+    <div class="my-3 flex flex-col" v-show="gameOver">
+      <p class="text-lg">Mode: {{ gameInfo.gameMode }}</p>
+      <p class="text-md">
+        Score: <span>{{ gameInfo.totalScore }}</span>
+      </p>
 
-        <n-divider />
+      <n-divider />
 
-        <n-collapse>
-          <n-collapse-item title="Round Summary" name="1">
-            <n-timeline size="large">
-              <n-timeline-item
-                v-for="(item, index) in gameInfo.rounds"
-                :key="index"
-                :type="getTimeLineType(item.result)"
-                :title="`Round ${index + 1}`"
-                :content="`Score: ${item.score}`"
-              >
-                <template #footer>
-                  <div class="flex items-center justify-start">
-                    <span class="text-sm">Colors: </span>
-                    <div
-                      class="ml-3 mr-1 h-[15px] w-[15px] rounded-md"
-                      :style="{ backgroundColor: item.baseColor }"
-                    />
-                    <div
-                      class="ml-1 h-[15px] w-[15px] rounded-md"
-                      :style="{ backgroundColor: item.changedColor }"
-                    />
-                  </div>
-                </template>
-              </n-timeline-item>
-            </n-timeline>
-          </n-collapse-item>
-        </n-collapse>
-      </div>
+      <n-collapse>
+        <n-collapse-item title="Round Summary" name="1">
+          <n-timeline size="large">
+            <n-timeline-item
+              v-for="(item, index) in gameInfo.rounds"
+              :key="index"
+              :type="getTimeLineType(item.result)"
+              :title="`Round ${index + 1}`"
+              :content="`Score: ${item.score}`"
+            >
+              <template #footer>
+                <div class="flex items-center justify-start">
+                  <span class="text-sm">Colors: </span>
+                  <div
+                    class="ml-3 mr-1 h-[15px] w-[15px] rounded-md"
+                    :style="{ backgroundColor: item.baseColor }"
+                  />
+                  <div
+                    class="ml-1 h-[15px] w-[15px] rounded-md"
+                    :style="{ backgroundColor: item.changedColor }"
+                  />
+                </div>
+              </template>
+            </n-timeline-item>
+          </n-timeline>
+        </n-collapse-item>
+      </n-collapse>
+    </div>
 
-      <div
-        class="my-3 flex w-full items-center justify-center"
-        v-if="development"
-      >
-        <span>{{ roundCode }}</span>
-      </div>
+    <div
+      class="my-3 flex w-full items-center justify-center"
+      v-if="development"
+    >
+      <span>{{ roundCode }}</span>
+    </div>
 
-      <div v-if="development">
-        <n-button type="warning" dashed @click="renderGrid" size="large">
-          Reset
-        </n-button>
-      </div>
+    <div v-if="development">
+      <n-button type="warning" dashed @click="renderGrid" size="large">
+        Reset
+      </n-button>
     </div>
   </main>
 </template>
@@ -106,8 +105,7 @@ import {
   NTimelineItem,
 } from "naive-ui";
 import { v4 as uuidv4 } from "uuid";
-import type { Ref } from "vue";
-import { computed, onMounted, ref } from "vue";
+import { type Ref, computed, onBeforeUnmount, onMounted, ref } from "vue";
 
 const rows = ref(10);
 const cols = ref(5);
@@ -148,7 +146,7 @@ const totalRounds = ref(30);
 
 const currentTurn = ref(1);
 const roundCode = ref("");
-const gameOver = ref(true);
+const gameOver = ref(false);
 
 const currentDifficulty = ref("easy");
 
@@ -460,7 +458,7 @@ const selectOption = (rowIndex: number, colIndex: number) => {
 
 onMounted(() => {
   if (gameInfo.value.gameMode === "Standard") {
-    totalRounds.value = 12;
+    totalRounds.value = 30;
     currentDifficulty.value = "easy";
     timerInterval.value = 50;
   } else if (gameInfo.value.gameMode === "endless") {
@@ -468,7 +466,11 @@ onMounted(() => {
     currentDifficulty.value = "easy";
   }
 
-  // renderGrid();
+  renderGrid();
+});
+
+onBeforeUnmount(() => {
+  resetTimer();
 });
 </script>
 

@@ -1,0 +1,11 @@
+<template>
+  <div>
+    <Vue3Lottie
+      animationLink="https://assets1.lottiefiles.com/packages/lf20_AQcLsD.json"
+      :height="200"
+      :width="200"
+      direction="alternate"
+      class="m-0"
+    />
+  </div>
+</template>
