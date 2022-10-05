@@ -2,6 +2,12 @@
 
 A simple game where you have to find the odd one out. The game is written in Vue and TypeScript. Feature requests and bug reports are welcome.
 
+## How to play
+
+The regular game mode has three levels of difficulty. The first level has a 3x3 grid, the second level has a 5x5 grid and the third level has a 7x7 grid. The game will start with the first level and will increase the level after 10 rounds. The game will end after 30 rounds. You will also be under the pressure of a timer so you have to be quick. The amount of time per round will also reduce as the level increases.
+
+Good luck!
+
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
