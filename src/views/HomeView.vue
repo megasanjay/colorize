@@ -50,7 +50,7 @@ import ButtonComponent from "@/components/ui/ButtonComponent.vue";
 
     <RouterLink to="/play">
       <div class="flex justify-center md:justify-start">
-        <ButtonComponent text="Let's play" />
+        <ButtonComponent text="Let's play" class="umami--click--play-button" />
       </div>
     </RouterLink>
   </main>
