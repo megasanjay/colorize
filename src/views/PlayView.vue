@@ -1,6 +1,6 @@
 <template>
   <main
-    class="mx-auto flex h-full w-full max-w-screen-lg flex-col items-center px-3 pb-32 pt-20"
+    class="relateive mx-auto flex h-full w-full max-w-screen-lg flex-col items-center px-3 pb-32 pt-20"
   >
     <div id="play-container" class="h-full w-full bg-red-50">
       <div class="my-3 flex h-[10px] w-full items-center justify-center">
@@ -36,30 +36,79 @@
         </div>
       </div>
 
-      <div class="my-3 flex w-full items-center justify-center">
+      <div
+        class="my-3 flex w-full items-center justify-center"
+        v-show="!gameOver"
+      >
+        <span>{{ currentTurn }} / 30</span>
+      </div>
+
+      <div class="my-3 flex flex-col" v-show="gameOver">
+        <p class="text-lg">Mode: {{ gameInfo.gameMode }}</p>
+        <p class="text-md">
+          Score: <span>{{ gameInfo.totalScore }}</span>
+        </p>
+
+        <n-divider />
+
+        <n-collapse>
+          <n-collapse-item title="Round Summary" name="1">
+            <n-timeline size="large">
+              <n-timeline-item
+                v-for="(item, index) in gameInfo.rounds"
+                :key="index"
+                :type="getTimeLineType(item.result)"
+                :title="`Round ${index + 1}`"
+                :content="`Score: ${item.score}`"
+              >
+                <template #footer>
+                  <div class="flex items-center justify-start">
+                    <span class="text-sm">Colors: </span>
+                    <div
+                      class="ml-3 mr-1 h-[15px] w-[15px] rounded-md"
+                      :style="{ backgroundColor: item.baseColor }"
+                    />
+                    <div
+                      class="ml-1 h-[15px] w-[15px] rounded-md"
+                      :style="{ backgroundColor: item.changedColor }"
+                    />
+                  </div>
+                </template>
+              </n-timeline-item>
+            </n-timeline>
+          </n-collapse-item>
+        </n-collapse>
+      </div>
+
+      <div
+        class="my-3 flex w-full items-center justify-center"
+        v-if="development"
+      >
         <span>{{ roundCode }}</span>
       </div>
 
-      <div>
-        <button
-          class="rounded-full bg-cyan-400 px-4 py-2 text-white"
-          @click="renderGrid"
-        >
+      <div v-if="development">
+        <n-button type="warning" dashed @click="renderGrid" size="large">
           Reset
-        </button>
-      </div>
-
-      <div class="my-3 flex w-full items-center justify-center">
-        <span>{{ currentTurn }} / 30</span>
+        </n-button>
       </div>
     </div>
   </main>
 </template>
 
 <script setup lang="ts">
+import {
+  NButton,
+  NCollapse,
+  NCollapseItem,
+  NDivider,
+  NTimeline,
+  NTimelineItem,
+} from "naive-ui";
 import { v4 as uuidv4 } from "uuid";
 import type { Ref } from "vue";
 import { computed, onMounted, ref } from "vue";
+
 const rows = ref(10);
 const cols = ref(5);
 
@@ -83,7 +132,7 @@ interface GameInfoType {
 
 const gameInfo = ref<GameInfoType>({
   id: uuidv4(),
-  gameMode: "normal",
+  gameMode: "Standard",
   totalScore: 0,
   rounds: [],
 });
@@ -99,7 +148,7 @@ const totalRounds = ref(30);
 
 const currentTurn = ref(1);
 const roundCode = ref("");
-const gameOver = ref(false);
+const gameOver = ref(true);
 
 const currentDifficulty = ref("easy");
 
@@ -122,6 +171,18 @@ const circleDimensions = computed(() => {
     return "30px";
   }
 });
+
+const getTimeLineType = (result: string) => {
+  if (result === "s-correct") {
+    return "success";
+  } else if (result === "s-wrong") {
+    return "error";
+  } else if (result === "no-time") {
+    return "warning";
+  } else {
+    return "info";
+  }
+};
 
 /** rgb to hex color conversion helper function */
 const componentToHex = (c: number) => {
@@ -220,6 +281,15 @@ const recordGame = () => {
   localStorage.setItem("statistics", JSON.stringify(statistics));
 };
 
+const showFinalScore = () => {
+  const finalScore = gameInfo.value.totalScore;
+  const finalScoreElement = document.getElementById("final-score");
+
+  if (finalScoreElement) {
+    finalScoreElement.innerHTML = `Your final score is ${finalScore}`;
+  }
+};
+
 /**
  * Check game state and run next turn functions
  */
@@ -228,7 +298,7 @@ const nextTurn = () => {
 
   currentTurn.value++;
 
-  if (gameInfo.value.gameMode === "normal") {
+  if (gameInfo.value.gameMode === "Standard") {
     if (currentTurn.value <= totalRounds.value) {
       if (currentTurn.value <= 10) {
         currentDifficulty.value = "easy";
@@ -253,6 +323,7 @@ const nextTurn = () => {
       console.log(gameInfo.value);
 
       // recordGame();
+      showFinalScore();
     }
   } else if (gameInfo.value.gameMode === "endless") {
     if (currentTurn.value <= 10) {
@@ -336,7 +407,7 @@ const renderGrid = () => {
     colorGrid.value.push(row);
   }
 
-  // startTimer();
+  startTimer();
 };
 
 /**
@@ -388,8 +459,8 @@ const selectOption = (rowIndex: number, colIndex: number) => {
 };
 
 onMounted(() => {
-  if (gameInfo.value.gameMode === "normal") {
-    totalRounds.value = 30;
+  if (gameInfo.value.gameMode === "Standard") {
+    totalRounds.value = 12;
     currentDifficulty.value = "easy";
     timerInterval.value = 50;
   } else if (gameInfo.value.gameMode === "endless") {
@@ -397,7 +468,7 @@ onMounted(() => {
     currentDifficulty.value = "easy";
   }
 
-  renderGrid();
+  // renderGrid();
 });
 </script>
 

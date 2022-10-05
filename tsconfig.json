@@ -1,7 +1,7 @@
 {
   "files": [],
   "compilerOptions": {
-    "types": ["node"]
+    "types": ["node", "uuid", "naive-ui/volar"]
   },
   "references": [
     {
