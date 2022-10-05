@@ -44,10 +44,42 @@
     </div>
 
     <div class="my-3 flex flex-col" v-show="gameOver">
-      <p class="text-lg">Mode: {{ gameInfo.gameMode }}</p>
-      <p class="text-md">
-        Score: <span>{{ gameInfo.totalScore }}</span>
-      </p>
+      <div class="flex justify-between">
+        <div class="flex flex-col">
+          <p class="text-lg">Mode: {{ gameInfo.gameMode }}</p>
+          <p class="text-md">
+            Score: <span>{{ gameInfo.totalScore }}</span>
+          </p>
+        </div>
+
+        <n-button @click="copyToClipboard">
+          <template #icon>
+            <n-icon>
+              <Icon icon="fluent:share-48-filled" />
+            </n-icon>
+          </template>
+          Share scores
+        </n-button>
+
+        <n-modal v-model:show="showScoresModal">
+          <n-card
+            style="width: 600px"
+            title="Summary"
+            :bordered="false"
+            size="huge"
+            role="dialog"
+            aria-modal="true"
+          >
+            <div class="rounded-md bg-gray-50 px-3 py-2">
+              <p class="text-md">Mode: {{ gameInfo.gameMode }}</p>
+              <p class="text-md mb-2">
+                Score: <span>{{ gameInfo.totalScore }}</span>
+              </p>
+              <p class="text-lg" v-html="gameRoundsSummary" />
+            </div>
+          </n-card>
+        </n-modal>
+      </div>
 
       <n-divider />
 
@@ -96,11 +128,16 @@
 </template>
 
 <script setup lang="ts">
+import { Icon } from "@iconify/vue";
+import { notify } from "@kyvg/vue3-notification";
 import {
   NButton,
+  NCard,
   NCollapse,
   NCollapseItem,
   NDivider,
+  NIcon,
+  NModal,
   NTimeline,
   NTimelineItem,
 } from "naive-ui";
@@ -113,7 +150,6 @@ import {
   onMounted,
   ref,
 } from "vue";
-
 const umami = inject("$umami");
 
 const rows = ref(10);
@@ -156,8 +192,11 @@ const totalRounds = ref(30);
 const currentTurn = ref(1);
 const roundCode = ref("");
 const gameOver = ref(false);
+const gameRoundsSummary = ref("");
 
 const currentDifficulty = ref("easy");
+
+const showScoresModal = ref(false);
 
 const development = process.env.NODE_ENV === `development`;
 
@@ -188,6 +227,49 @@ const getTimeLineType = (result: string) => {
     return "warning";
   } else {
     return "info";
+  }
+};
+
+const copyToClipboard = () => {
+  gameRoundsSummary.value = "";
+
+  let gameInfoText = "";
+
+  gameInfoText += `Mode: ${gameInfo.value.gameMode}\n`;
+  gameInfoText += `Score: ${gameInfo.value.totalScore}\n`;
+
+  gameInfo.value.rounds.forEach((round, index) => {
+    if (round.result === "s-correct") {
+      gameRoundsSummary.value += `✅`;
+      gameInfoText += `✅`;
+    } else {
+      gameRoundsSummary.value += `❌`;
+      gameInfoText += `❌`;
+    }
+
+    if ((index + 1) % 5 === 0) {
+      gameRoundsSummary.value += `<br/>`;
+      gameInfoText += `\n`;
+    }
+  });
+
+  showScoresModal.value = true;
+
+  try {
+    navigator.clipboard.writeText(gameInfoText);
+    notify({
+      type: "success",
+      duration: 3000,
+      title: "Success",
+      text: "Copied summary to your clipboard successfully!",
+    });
+  } catch (error) {
+    notify({
+      type: "error",
+      duration: 3000,
+      title: "Error",
+      text: "Failed to copy summary to your clipboard!",
+    });
   }
 };
 

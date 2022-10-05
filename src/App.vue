@@ -2,6 +2,8 @@
   <HeaderComponent />
 
   <RouterView />
+
+  <notifications />
 </template>
 
 <script setup lang="ts">

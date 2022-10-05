@@ -1,6 +1,7 @@
 import "./assets/main.css";
 import "vue3-lottie/dist/style.css";
 
+import Notifications from "@kyvg/vue3-notification";
 import { MotionPlugin } from "@vueuse/motion";
 import { createPinia } from "pinia";
 import { createApp } from "vue";
@@ -15,6 +16,7 @@ app.use(createPinia());
 app.use(MotionPlugin);
 app.use(router);
 app.use(Vue3Lottie);
+app.use(Notifications);
 
 app.provide("$umami", window.umami);
 
