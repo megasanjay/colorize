@@ -1,9 +1,8 @@
 ## [1.0.1](https://github.com/megasanjay/colorize/compare/v1.0.0...v1.0.1) (2022-10-17)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency pinia to v2.0.23 ([#13](https://github.com/megasanjay/colorize/issues/13)) ([5fa5bbf](https://github.com/megasanjay/colorize/commit/5fa5bbf16a326db32cdb6556ab148c3394e250df))
+- **deps:** update dependency pinia to v2.0.23 ([#13](https://github.com/megasanjay/colorize/issues/13)) ([5fa5bbf](https://github.com/megasanjay/colorize/commit/5fa5bbf16a326db32cdb6556ab148c3394e250df))
 
 # 1.0.0 (2022-10-05)
 
