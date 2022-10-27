@@ -508,7 +508,16 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@fairdataihub/config@1.2.2", "@fairdataihub/config@^1.2.1":
+"@fairdataihub/config@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@fairdataihub/config/-/config-2.0.0.tgz#13b55a3982f36a052d92a41b79e352d87d2ecfd2"
+  integrity sha512-DRKF7prj1uhsHVRiKn03db+2fLHwIY7MDqXDmmCZP++oYem6DPUg8j6bMCEwrlpqxeqPn3KGEMum0EC+X1w6DQ==
+  dependencies:
+    "@fairdataihub/config" "^1.2.1"
+    "@semantic-release/git" "^10.0.1"
+    megasanjay-devmoji "^1.0.0"
+
+"@fairdataihub/config@^1.2.1":
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/@fairdataihub/config/-/config-1.2.2.tgz#931b46bd09ee692ed47d5ce6bd31404aa09a6acf"
   integrity sha512-tv0tymBWVmODZjqtK9JvnrfZF5AW9DK2oUyQSZsNKcmdxYvTrEKUPCDlASCk/uJUJfl6CdkSG9BMmaqYg3rzyg==
@@ -4907,6 +4916,15 @@ marked@^4.0.10:
   resolved "https://registry.yarnpkg.com/marked/-/marked-4.1.0.tgz#3fc6e7485f21c1ca5d6ec4a39de820e146954796"
   integrity sha512-+Z6KDjSPa6/723PQYyc1axYZpYYpDnECDaU6hkaf5gqBieBkMKYReL5hteF2QizhlMbgbo8umXl/clZ67+GlsA==
 
+megasanjay-devmoji@^1.0.0:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/megasanjay-devmoji/-/megasanjay-devmoji-1.2.1.tgz#ae1e9cc18b19889632712713590d67522c8a7f7d"
+  integrity sha512-9sRyYQbv1USkSihyKDFwoq6sCA5o1BvtvqW50KOWvEHjK80F5xcHwZQdnyZ09X6paKqjfHs1jK4LMFtbwAYB3A==
+  dependencies:
+    chalk "^4.1.1"
+    commander "7.2.0"
+    ts-interface-checker "1.0.2"
+
 memorystream@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/memorystream/-/memorystream-0.3.1.tgz#86d7090b30ce455d63fbae12dda51a47ddcaf9b2"
@@ -7033,6 +7051,11 @@ ts-interface-checker@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/ts-interface-checker/-/ts-interface-checker-1.0.0.tgz#2c637389f24566e0bf7db8e4482bad1db7d3bd87"
   integrity sha512-yUeWbFBDiwPodNqrqpvQpGWheL6PvNu2/pVAb9yy2vzdkkflCgwVA4U2akByPCXzYTum3/5/nB92yKuiLpSo/Q==
+
+ts-interface-checker@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/ts-interface-checker/-/ts-interface-checker-1.0.2.tgz#63f73a098b0ed34b982df1f490c54890e8e5e0b3"
+  integrity sha512-4IKKvhZRXhvtYF/mtu+OCfBqJKV6LczUq4kQYcpT+iSB7++R9+giWnp2ecwWMIcnG16btVOkXFnoxLSYMN1Q1g==
 
 ts-node@^10.8.1:
   version "10.9.1"
