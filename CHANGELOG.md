@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/megasanjay/colorize/compare/v1.0.2...v1.0.3) (2022-11-03)
+
+
+### Bug Fixes
+
+* **deps:** update dependency vue-router to v4.1.6 ([#16](https://github.com/megasanjay/colorize/issues/16)) ([abb22a5](https://github.com/megasanjay/colorize/commit/abb22a5f698a4199ab85a8c182f91d55d6322a31))
+
 ## [1.0.2](https://github.com/megasanjay/colorize/compare/v1.0.1...v1.0.2) (2022-11-03)
 
 
